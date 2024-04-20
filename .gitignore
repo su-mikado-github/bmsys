@@ -1,1 +1,4 @@
-/.env.local
+/.env
+/db/mysql_data
+/db/mysql_log
+/api/.env
