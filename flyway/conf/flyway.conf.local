@@ -1,0 +1,6 @@
+flyway.url=jdbc:mysql://bmsys_db:3306/bmsys_db?allowPublicKeyRetrieval=true&useSSL=false
+flyway.user=bmsys_db_user
+flyway.password=P@sSw0rd
+flyway.cleanDisabled=false
+
+flyway.locations=filesystem:sql/

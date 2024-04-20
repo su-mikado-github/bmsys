@@ -1,0 +1,25 @@
+{
+  "folders": [
+    {
+      "path": "api"
+    },
+    {
+      "path": "db"
+    },
+    {
+      "path": "docs"
+    },
+    {
+      "path": "front"
+    },
+    {
+      "path": "."
+    },
+    {
+      "path": "web"
+    },
+    {
+      "path": "flyway"
+    }
+  ]
+}

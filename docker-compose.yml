@@ -1,0 +1,82 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0.14
+    container_name: bmsys_db
+    tty: true
+    restart: always
+    ports:
+      - "33308:3306"
+    volumes:
+      - ./db/${MYSQL_INIT}:/docker-entrypoint-initdb.d
+      - ./db/mysql_data:/var/lib/mysql
+      - ./db/mysql_log:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: Asia/Tokyo
+  api:
+    build: ./api
+    container_name: bmsys_api
+    tty: true
+    restart: always
+    depends_on:
+      - db
+#      - redis
+    volumes:
+      - ./api:/var/www
+#      - ./api/src:/var/www/laravel
+#      - ./api/.env.${PROFILE}:/var/www/laravel/.env
+#      - laravel_framework_volume:/var/www/laravel/storage/framework
+#      - laravel_vendor_volume:/var/www/laravel/vendor
+    ports:
+      - "18085:8000"
+  front:
+    container_name: bmsys_front
+    build: front
+    volumes:
+      - ./front:/app:cached
+      - nuxt_node_modules:/app/node_modules
+    ports:
+      - "18084:3000"
+      - "24678:24678"
+    tty: true
+    environment:
+      - HOST=0.0.0.0
+      - port=3000
+      - CHOKIDAR_USEPOLLING=true
+    command: sh -c "yarn dev -o"
+  web:
+    container_name: bmsys_web
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - 8082:80
+    tty: true
+    restart: always
+    depends_on:
+      - front
+      - api
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+  flyway:
+    container_name: bmsys_flyway
+    build: ./flyway
+    tty: true
+    restart: always
+    command: /bin/bash
+    image: flyway/flyway
+    depends_on:
+      - db
+    volumes:
+      - ./flyway/sql:/flyway/sql
+      - ./flyway/conf/${FLYWAY_CONF}:/flyway/conf/flyway.conf
+      - ./flyway/drivers:/flyway/drivers
+volumes:
+  nuxt_node_modules:
+  laravel_framework_volume:
+  laravel_vendor_volume:
