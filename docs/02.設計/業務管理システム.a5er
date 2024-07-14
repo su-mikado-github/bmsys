@@ -1,0 +1,541 @@
+﻿# A5:ER FORMAT:18
+# A5:ER ENCODING:UTF8
+# A5:ER Mk-1 Copyright © 2007 m.matsubara
+# A5:SQL Mk-2 Version 2.19.1 Copyright © 1997 - 2024 m.matsubara
+#  https://a5m2.mmatsubara.com
+
+[Manager]
+ProjectName=業務管理システム
+Author=Shuji Ushiyama
+MaxEntityRowShow=1000
+ReadOnlyRecommend=0
+Page=Main
+PageInfo="Main",7,"A3Landscape",$FFFFFF
+Page=退避
+PageInfo="退避",2,"A3Landscape",$FFFFFF
+Domain=フラグ=TINYINT
+DomainInfo="フラグ","TINYINT","0:OFF 1:ON",""
+Domain=タイムスタンプ=BIGINT
+DomainInfo="タイムスタンプ","BIGINT","",""
+Domain=日付=DATE
+DomainInfo="日付","DATE","",""
+Domain=日数=INT
+DomainInfo="日数","INT","",""
+Domain=整数=INT
+DomainInfo="整数","INT","",""
+Domain=長整数=BIGINT
+DomainInfo="長整数","BIGINT","",""
+Domain=浮動小数=DOUBLE
+DomainInfo="浮動小数","DOUBLE","",""
+Domain=文字列=VARCHAR(1024)
+DomainInfo="文字列","VARCHAR(1024)","",""
+Domain=長文字列=TEXT
+DomainInfo="長文字列","TEXT","",""
+Domain=JSON文字列=MEDIUMTEXT
+DomainInfo="JSON文字列","MEDIUMTEXT","",""
+Domain=レコードID=BIGINT AUTO_INCREMENT
+DomainInfo="レコードID","BIGINT AUTO_INCREMENT","","id"
+Domain=利用者ID（参照）=BIGINT
+DomainInfo="利用者ID（参照）","BIGINT","",""
+Domain=権限グループID（参照）=BIGINT
+DomainInfo="権限グループID（参照）","BIGINT","",""
+Domain=画面ID（参照）=BIGINT
+DomainInfo="画面ID（参照）","BIGINT","",""
+Domain=アクションID（参照）=BIGINT
+DomainInfo="アクションID（参照）","BIGINT","",""
+Domain=社員番号=INT
+DomainInfo="社員番号","INT","",""
+Domain=姓=VARCHAR(64)
+DomainInfo="姓","VARCHAR(64)","",""
+Domain=名=VARCHAR(64)
+DomainInfo="名","VARCHAR(64)","",""
+Domain=姓かな=VARCHAR(128)
+DomainInfo="姓かな","VARCHAR(128)","ひらがな及び全角数字のみ許容",""
+Domain=名かな=VARCHAR(128)
+DomainInfo="名かな","VARCHAR(128)","ひらがな及び全角数字のみ許容",""
+Domain=入社日=DATE
+DomainInfo="入社日","DATE","",""
+Domain=有給付与日=DATE
+DomainInfo="有給付与日","DATE","入社日以降の日付になる",""
+Domain=データ・バージョン=BIGINT
+DomainInfo="データ・バージョン","BIGINT","レコードが後進されるたびにインクリメント。",""
+Domain=パスワード=VARCHAR(128)
+DomainInfo="パスワード","VARCHAR(128)","ハッシュ化する",""
+Domain=開始日=DATE
+DomainInfo="開始日","DATE","レコードの有効期間の開始日","start_date"
+Domain=終了日=DATE
+DomainInfo="終了日","DATE","レコードの有効期間の終了日。期間に含む。最大値は9999-12-31","end_date"
+Domain=リマインダー・トークン=VARCHAR(256)
+DomainInfo="リマインダー・トークン","VARCHAR(256)","","reminder_token"
+Domain=有給取得日数=DECIMAL(2,1)
+DomainInfo="有給取得日数","DECIMAL(2,1)","正の数。0.5または1.0のいずれか",""
+Domain=識別キー=VARCHAR(256)
+DomainInfo="識別キー","VARCHAR(256)","半角文字のみ",""
+Domain=文章=TEXT
+DomainInfo="文章","TEXT","改行コードを含む",""
+Domain=システム・プロパティ型=INT
+DomainInfo="システム・プロパティ型","INT","0:文字列 1:長文字列 2:整数 3:浮動小数 4:日付 5:JSON",""
+Domain=システム・プロパティ・グループ=VARCHAR(256)
+DomainInfo="システム・プロパティ・グループ","VARCHAR(256)","",""
+Domain=名称=VARCHAR(256)
+DomainInfo="名称","VARCHAR(256)","",""
+LogicalView=1
+DecodeDomain=0
+ViewModePageIndividually=1
+ViewMode=7
+ViewFormat=0
+UseNondependenceDashLine=0
+FontName=Tahoma
+FontSize=6
+PaperSize=A4Landscape
+HeaderLeft=製作者：%Author%
+HeaderCenter=業務管理システム - ER図（%PageName%）
+HeaderRight=最終出力日：%Date%
+FooterLeft=
+FooterCenter=%PageNo%／%PageCount%
+FooterRight=
+ShowPageoutRelation=1
+RDBMSType=6
+RDBMSTypeName=MySQL
+GenerateDropTableStatement=1
+DropTableIfExists=1
+BackupRestoreTempTable=0
+CommonField="作成日時","create_dt","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF
+CommonField="作成者ID","create_id","*利用者ID（参照）","NOT NULL",,"","",$FFFFFFFF
+CommonField="更新日時","update_tm","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF
+CommonField="更新者ID","update_id","*利用者ID（参照）","NOT NULL",,"","",$FFFFFFFF
+CommonField="削除済フラグ","is_deleted","*フラグ","NOT NULL",,"0","0:未削除 1:削除済み",$FFFFFFFF
+CommonField="","deleted_tm","*タイムスタンプ",,,"","",$FFFFFFFF
+CommonField="","data_version","*データ・バージョン",,,"1","楽観排他用。レコードのバージョン",$FFFFFFFF
+DefaultPkName=%0:s_PKC
+DefaultPkIndexName=%0:s_PKI
+DefaultIndexName=%0:s_IX%1:d
+DefaultFkName=%0:s_FK%1:d
+SqlSeparator=0
+UpperCaseKeyword=0
+ShowTag=1
+ShowCommonAttributes=0
+BugFixEntityWidth=1
+
+[Entity]
+PName=users
+LName=利用者
+Comment=
+TableInnerOption=
+TableOption=
+Page=MAIN
+Left=1672
+Top=471
+Field="利用者ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="社員番号","employee_no","*社員番号","NOT NULL",,"","",$FFFFFFFF,""
+Field="現在パスワード","password","*パスワード","NOT NULL",,"","ハッシュ化する事",$FFFFFFFF,""
+Field="姓","last_name","*姓","NOT NULL",,"","",$FFFFFFFF,""
+Field="名","first_name","*名","NOT NULL",,"","",$FFFFFFFF,""
+Field="姓かな","last_name_hirakana","*姓かな","NOT NULL",,"","",$FFFFFFFF,""
+Field="名かな","first_name_hirakana","*名かな","NOT NULL",,"","",$FFFFFFFF,""
+Field="入社日","hire_date","*入社日","NOT NULL",,"","",$FFFFFFFF,""
+Field="初回有給付与日","first_paid_grant_date","*有給付与日","NOT NULL",,"","",$FFFFFFFF,""
+Field="リマインダー・トークン","reminder_token","*リマインダー・トークン","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240411123655
+Position="MAIN",1672,471
+ZOrder=1
+
+[Entity]
+PName=password_historys
+LName=パスワード履歴
+Comment=
+TableInnerOption=
+TableOption=
+Page=MAIN
+Left=2518
+Top=488
+Field="パスワード履歴ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="利用者ID","user_id","*利用者ID（参照）","NOT NULL",,"","",$FFFFFFFF,""
+Field="パスワード","password","*パスワード","NOT NULL",,"","ハッシュ化する事",$FFFFFFFF,""
+Field="開始日","start_date","*開始日","NOT NULL",,"\q0000-01-01\q","有効期間の開始日。期間に含む。",$FFFFFFFF,""
+Field="終了日","end_date","*終了日","NOT NULL",,"\q9999-12-31\q","有効期間の終了日。期間に含む。",$FFFFFFFF,""
+EffectMode=None
+Tag=履歴
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240411123147
+Position="MAIN",2518,488
+ZOrder=2
+
+[Relation]
+Entity1=users
+Entity2=password_historys
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=user_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,2799,4844,4259,R,R,""
+Dependence=0
+Caption=
+PName=
+NoDDL=1
+ModifiedDateTime=20240411123217
+LineMode=0
+Bar1=280
+Bar2=484
+Bar3=426
+TermPos1=R
+TermPos2=R
+ZOrder=3
+
+[Entity]
+PName=salarys
+LName=有給
+Comment=
+TableInnerOption=
+TableOption=
+Page=MAIN
+Left=1753
+Top=989
+Field="有給ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="利用者ID","user_id","*利用者ID（参照）","NOT NULL",,"","",$FFFFFFFF,""
+Field="付与日数","days","*日数","NOT NULL",,"","1以上",$FFFFFFFF,""
+Field="開始日","start_date","*開始日","NOT NULL",,"\q0000-01-01\q","有給有効期間の開始日",$FFFFFFFF,""
+Field="終了日","end_date","*終了日","NOT NULL",,"\q9999-12-31\q","有給有効期間の終了日",$FFFFFFFF,""
+EffectMode=None
+Tag=履歴
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240411124329
+Position="MAIN",1753,989
+ZOrder=4
+
+[Relation]
+Entity1=users
+Entity2=salarys
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=user_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,4634,5688,4336,R,R,""
+Dependence=0
+Caption=
+PName=
+NoDDL=1
+ModifiedDateTime=20240411124354
+LineMode=0
+Bar1=463
+Bar2=569
+Bar3=434
+TermPos1=R
+TermPos2=R
+ZOrder=5
+
+[Entity]
+PName=use_salarys
+LName=利用有給
+Comment=
+TableInnerOption=
+TableOption=
+Page=MAIN
+Left=2413
+Top=1008
+Field="利用有給ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="利用者ID","user_id","*利用者ID（参照）","NOT NULL",,"","",$FFFFFFFF,""
+Field="有給取得日","use_date","*日付","NOT NULL",,"","",$FFFFFFFF,""
+Field="有給取得日数","use_days","*有給取得日数","NOT NULL",,"","0.5または1.0のいずれか",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240411125021
+Position="MAIN",2413,1008
+ZOrder=6
+
+[Relation]
+Entity1=users
+Entity2=use_salarys
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=user_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",1,6753,6325,2179,R,R,""
+Dependence=0
+Caption=
+PName=
+NoDDL=1
+ModifiedDateTime=20240411125007
+LineMode=1
+Bar1=675
+Bar2=632
+Bar3=218
+TermPos1=R
+TermPos2=R
+ZOrder=7
+
+[Entity]
+PName=system_settings
+LName=システム設定
+Comment=
+TableInnerOption=
+TableOption=
+Page=MAIN
+Left=945
+Top=1448
+Field="システム設定ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="システム・プロパティ名","property_key","*識別キー","NOT NULL",,"","",$FFFFFFFF,""
+Field="システム・プロパティ・グループ","property_group","*システム・プロパティ・グループ","NOT NULL",,"\q*\q","",$FFFFFFFF,""
+Field="データ型","data_type","*システム・プロパティ型","NOT NULL",,"0","",$FFFFFFFF,""
+Field="必須フラグ","is_required","*フラグ","NOT NULL",,"0","0:任意 1:必須",$FFFFFFFF,""
+Field="説明文","description","*文章",,,"","",$FFFFFFFF,""
+Field="文字列","string_value","*文字列",,,"","",$FFFFFFFF,""
+Field="文章","text_value","*長文字列",,,"","",$FFFFFFFF,""
+Field="整数値","integer_value","*整数",,,"","",$FFFFFFFF,""
+Field="浮動小数値","double_value","*浮動小数",,,"","",$FFFFFFFF,""
+Field="日付値","date_value","*日付",,,"","",$FFFFFFFF,""
+Field="JSON値","json_value","*JSON文字列",,,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=マスタ
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240411140749
+Position="MAIN",945,1448
+ZOrder=8
+
+[Entity]
+PName=permission_groups
+LName=権限グループ
+Comment=
+TableInnerOption=
+TableOption=
+Page=MAIN
+Left=813
+Top=782
+Field="権限グループID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="権限グループ名称","name","*名称",,,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240412022514
+Position="MAIN",813,782
+ZOrder=9
+
+[Entity]
+PName=user_permission_groups
+LName=利用者権限グループ
+Comment=
+TableInnerOption=
+TableOption=
+Page=MAIN
+Left=672
+Top=484
+Field="利用者権限グループID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="利用者ID","user_id","*利用者ID（参照）","NOT NULL",,"","",$FFFFFFFF,""
+Field="権限グループID","permission_group_id","*権限グループID（参照）","NOT NULL",,"","",$FFFFFFFF,""
+Field="開始日","start_date","*開始日","NOT NULL",,"\q0000-01-01\q","",$FFFFFFFF,""
+Field="終了日","end_date","*終了日","NOT NULL",,"\q9999-12-31\q","",$FFFFFFFF,""
+EffectMode=None
+Tag=関連
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240412022953
+Position="MAIN",672,484
+ZOrder=10
+
+[Relation]
+Entity1=users
+Entity2=user_permission_groups
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=user_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,2193,6486,3362,R,R,""
+Dependence=0
+Caption=
+PName=
+NoDDL=1
+ModifiedDateTime=20240412023020
+LineMode=0
+Bar1=219
+Bar2=649
+Bar3=336
+TermPos1=R
+TermPos2=R
+ZOrder=11
+
+[Relation]
+Entity1=permission_groups
+Entity2=user_permission_groups
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=permission_group_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,5097,5470,4667,R,R,""
+Dependence=0
+Caption=
+PName=
+NoDDL=1
+ModifiedDateTime=20240412023045
+LineMode=0
+Bar1=510
+Bar2=547
+Bar3=467
+TermPos1=R
+TermPos2=R
+ZOrder=12
+
+[Entity]
+PName=screens
+LName=画面
+Comment=
+TableInnerOption=
+TableOption=
+Page=MAIN
+Left=788
+Top=1286
+Field="画面ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="画面識別キー","screen_key","*識別キー","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240412155529
+Position="MAIN",788,1286
+ZOrder=13
+
+[Entity]
+PName=actions
+LName=アクション
+Comment=
+TableInnerOption=
+TableOption=
+Page=退避
+Left=861
+Top=1179
+Field="アクションID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="アクション識別キー","action_key","*識別キー",,,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240412155520
+Position="退避",861,1179
+ZOrder=14
+
+[Entity]
+PName=screen_permission_groups
+LName=画面権限グループ
+Comment=
+TableInnerOption=
+TableOption=
+Page=MAIN
+Left=668
+Top=959
+Field="画面権限グループID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="画面ID","screen_id","*画面ID（参照）","NOT NULL",,"","",$FFFFFFFF,""
+Field="権限グループID","permission_group_id","*権限グループID（参照）","NOT NULL",,"","",$FFFFFFFF,""
+Field="登録許可フラグ","is_create","*フラグ","NOT NULL",,"0","0:拒否 1:許可",$FFFFFFFF,""
+Field="更新許可フラグ","is_update","*フラグ","NOT NULL",,"0","0:拒否 1:許可",$FFFFFFFF,""
+Field="削除許可フラグ","is_delete","*フラグ","NOT NULL",,"0","0:拒否 1:許可",$FFFFFFFF,""
+Field="ダウンロード許可フラグ","is_download","*フラグ","NOT NULL",,"0","0:拒否 1:許可",$FFFFFFFF,""
+EffectMode=None
+Tag=関連
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240412161700
+Position="MAIN",668,959
+ZOrder=16
+
+[Entity]
+PName=action_permission_groups
+LName=アクション権限グループ
+Comment=
+TableInnerOption=
+TableOption=
+Page=退避
+Left=851
+Top=958
+Field="画面権限グループID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="アクションID","action_id","*アクションID（参照）","NOT NULL",,"","",$FFFFFFFF,""
+Field="権限グループID","permission_group_id","*権限グループID（参照）","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Tag=関連
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240412160222
+Position="退避",851,958
+ZOrder=17
+
+[Relation]
+Entity1=permission_groups
+Entity2=screen_permission_groups
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=permission_group_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",1,5150,4653,4827,R,R,""
+Dependence=0
+Caption=
+PName=
+NoDDL=1
+ModifiedDateTime=20240412160318
+LineMode=1
+Bar1=515
+Bar2=465
+Bar3=483
+TermPos1=R
+TermPos2=R
+ZOrder=18
+
+[Relation]
+Entity1=screens
+Entity2=screen_permission_groups
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=screen_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,5605,4824,4840,R,R,""
+Dependence=0
+Caption=
+PName=
+NoDDL=1
+ModifiedDateTime=20240412160433
+LineMode=0
+Bar1=560
+Bar2=482
+Bar3=484
+TermPos1=R
+TermPos2=R
+ZOrder=20
+
+[Relation]
+Entity1=actions
+Entity2=action_permission_groups
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=action_id
+Cardinarity1=
+Cardinarity2=
+Position="退避",0,4703,5297,4701,R,R,""
+Dependence=0
+Caption=
+PName=
+NoDDL=1
+ModifiedDateTime=20240412160501
+LineMode=0
+Bar1=470
+Bar2=530
+Bar3=470
+TermPos1=R
+TermPos2=R
+ZOrder=21

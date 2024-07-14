@@ -1,25 +1,36 @@
 {
   "folders": [
     {
-      "path": "api"
+      "name": "app",
+      "path": "app"
     },
     {
+      "name": "db",
       "path": "db"
     },
     {
-      "path": "docs"
-    },
-    {
-      "path": "front"
-    },
-    {
-      "path": "."
-    },
-    {
+      "name": "web",
       "path": "web"
     },
     {
+      "name": "flyway",
       "path": "flyway"
+    },
+    {
+      "name": "docs",
+      "path": "docs"
+    },
+    {
+      "name": "bmsys",
+      "path": "."
+    },
+    {
+      "name": "api",
+      "path": "api"
+    },
+    {
+      "name": "front",
+      "path": "front"
     }
   ]
 }

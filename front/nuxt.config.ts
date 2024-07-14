@@ -4,6 +4,13 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
+  css: ["bootstrap/dist/css/bootstrap.css"],
+  vite: {
+    define: {
+      "process.env.DEBUG": false,
+    },
+  },
+
   app: {
     head: {
       title: "My Blog",
@@ -17,7 +24,7 @@ export default defineNuxtConfig({
       ],
       script: [
         //
-        { src: "/scripts/test.js", type: "text/javascript" },
+        //        { src: "/scripts/test.js", type: "text/javascript" },
       ],
     },
   },
