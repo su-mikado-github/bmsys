@@ -18,33 +18,45 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       TZ: Asia/Tokyo
-  app:
-    build: ./app
-    container_name: bmsys_app
+  # app:
+  #   build: ./app
+  #   container_name: bmsys_app
+  #   tty: true
+  #   restart: always
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - ./app:/var/www
+  #   ports:
+  #     - "18085:8000"
+  api:
+    build: ./api
+    container_name: bmsys_api
     tty: true
     restart: always
     depends_on:
       - db
+  #      - redis
     volumes:
-      - ./app:/var/www
+      - ./api:/var/www
+  #      - ./api/src:/var/www/laravel
+  #      - ./api/.env.${PROFILE}:/var/www/laravel/.env
+  #      - laravel_framework_volume:/var/www/laravel/storage/framework
+  #      - laravel_vendor_volume:/var/www/laravel/vendor
     ports:
       - "18085:8000"
-  #   api:
-  #     build: ./api
-  #     container_name: bmsys_api
-  #     tty: true
-  #     restart: always
-  #     depends_on:
-  #       - db
-  # #      - redis
-  #     volumes:
-  #       - ./api:/var/www
-  # #      - ./api/src:/var/www/laravel
-  # #      - ./api/.env.${PROFILE}:/var/www/laravel/.env
-  # #      - laravel_framework_volume:/var/www/laravel/storage/framework
-  # #      - laravel_vendor_volume:/var/www/laravel/vendor
-  #     ports:
-  #       - "18085:8000"
+  front:
+    build:
+      context: "./front"
+      dockerfile: "Dockerfile"
+    container_name: bmsys_front
+    ports:
+      - 8002:8000
+    volumes:
+      - ./front/app:/app
+    tty: true
+    environment:
+      - NODE_ENV=development
   #   front:
   #     container_name: bmsys_front
   #     build: front
@@ -70,9 +82,9 @@ services:
     tty: true
     restart: always
     depends_on:
-      - app
-      # - front
-      # - api
+      # - app
+      - front
+      - api
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
   flyway:

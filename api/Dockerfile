@@ -11,6 +11,7 @@ RUN apt update -qq && apt -y install mariadb-client
 RUN apt update -qq && apt -y install cron
 RUN apt update -qq && apt -y install vim
 RUN apt update -qq && apt -y install procps
+RUN apt update -qq && apt -y install dos2unix
 
 RUN docker-php-ext-install zip
 #RUN docker-php-ext-install sodium

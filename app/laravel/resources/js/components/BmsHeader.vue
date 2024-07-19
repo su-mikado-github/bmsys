@@ -30,7 +30,7 @@
                             <a
                                 class="nav-link text-white active"
                                 aria-current="page"
-                                href="#"
+                                @click="mypageClick"
                             >
                                 <icon font="mdi mdi-home-circle-outline" />
                                 <span class="d-none d-md-inline px-1">
@@ -75,14 +75,14 @@
 </template>
 
 <script>
-import { mdiAccount, mdiHomeCircleOutline } from "@mdi/js";
+// import { mdiAccount, mdiHomeCircleOutline } from "@mdi/js";
 
 export default {
     data() {
         return {
             //
-            mdiAccount,
-            mdiHomeCircleOutline,
+            // mdiAccount,
+            // mdiHomeCircleOutline,
         };
     },
 
@@ -96,6 +96,9 @@ export default {
 
     methods: {
         //
+        mypageClick() {
+            console.log("マイページをクリック！！");
+        },
     },
 };
 </script>

@@ -27,3 +27,4 @@ if [ -e /var/www/laravel ]; then
 
   php artisan serve --host=0.0.0.0
 fi
+

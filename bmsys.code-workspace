@@ -1,8 +1,12 @@
 {
   "folders": [
     {
-      "name": "app",
-      "path": "app"
+      "name": "api",
+      "path": "api"
+    },
+    {
+      "name": "front",
+      "path": "front"
     },
     {
       "name": "db",
@@ -23,14 +27,6 @@
     {
       "name": "bmsys",
       "path": "."
-    },
-    {
-      "name": "api",
-      "path": "api"
-    },
-    {
-      "name": "front",
-      "path": "front"
     }
   ]
 }
