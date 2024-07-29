@@ -1,0 +1,1 @@
+window.BMSYS = @json($bmsys);

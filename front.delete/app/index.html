@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>業務システム（仮）</title>
+    <!-- <script src="https://cjrtnc.leaningtech.com/3.0/cj3loader.js"></script> -->
+    <script type="text/javascript" src="/config"></script>
+    <script type="module">
+      import { LitElement, css, html } from "lit";
+      import hello from "/helpers/sample.js";
+
+      // await cheerpjInit();
+      // const lib = await cheerpjRunLibrary("");
+      // const System = await lib.java.lang.System;
+      // await System.out.println("Hello from Java");
+
+      console.log(BMSYS);
+
+      class IndexPage extends LitElement {
+        static properties = {
+          name: {},
+        };
+
+        // Define scoped styles right with your component, in plain CSS
+        static styles = css`
+          :host {
+            color: blue;
+          }
+        `;
+
+        #search = Array.from(new URLSearchParams(location.search).entries());
+
+        #url = new URL("/api/ping", `${location.protocol}//${location.host}`);
+
+        #childRender([key, value]) {
+          console.log({ key, value });
+          return html`<p>
+            <span>${key ?? ""}</span><span>${value ?? ""}</span>
+          </p>`;
+        }
+
+        #ping() {
+          fetch(this.#url, { method: "GET" })
+            .then((response) => response.json())
+            .then((result) => {
+              console.log(result);
+              setTimeout(() => this.#ping(), 600000);
+            });
+        }
+
+        constructor() {
+          super();
+          // Declare reactive properties
+          this.name = "World";
+
+          this.#ping();
+        }
+
+        // Render the UI as a function of component state
+        render() {
+          return html`<p>Hello, ${this.name}!!!!</p>
+            ${this.#search.map(this.#childRender)}`;
+        }
+      }
+
+      customElements.define("index-page", IndexPage);
+    </script>
+  </head>
+  <body>
+    <index-page name="World"></index-page>
+  </body>
+</html>
