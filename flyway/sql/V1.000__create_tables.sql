@@ -1,8 +1,43 @@
 -- Project Name : 業務管理システム
--- Date/Time    : 2024/08/17 2:54:50
+-- Date/Time    : 2024/08/20 10:46:38
 -- Author       : Shuji Ushiyama
 -- RDBMS Type   : MySQL
 -- Application  : A5:SQL Mk-2
+
+-- メニュー項目
+drop table if exists menu_items cascade;
+
+create table menu_items (
+  id BIGINT AUTO_INCREMENT not null comment 'メニュー項目ID'
+  , menu_id BIGINT not null comment 'メニューID'
+  , display_order BIGINT default 0 not null comment '表示順'
+  , screen_key VARCHAR(256) not null comment '画面識別キー'
+  , create_tm BIGINT not null comment '作成日時'
+  , create_id BIGINT not null comment '作成者ID'
+  , update_tm BIGINT not null comment '更新日時'
+  , update_id BIGINT not null comment '更新者ID'
+  , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
+  , constraint menu_items_PKC primary key (id)
+) comment 'メニュー項目' ;
+
+-- メニュー
+drop table if exists menus cascade;
+
+create table menus (
+  id BIGINT AUTO_INCREMENT not null comment 'メニューID'
+  , key VARCHAR(256) not null comment 'メニュー識別キー'
+  , name VARCHAR(256) comment 'メニュー名'
+  , create_tm BIGINT not null comment '作成日時'
+  , create_id BIGINT not null comment '作成者ID'
+  , update_tm BIGINT not null comment '更新日時'
+  , update_id BIGINT not null comment '更新者ID'
+  , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
+  , constraint menus_PKC primary key (id)
+) comment 'メニュー' ;
 
 -- アクション権限グループ
 drop table if exists action_permission_groups cascade;
@@ -16,8 +51,8 @@ create table action_permission_groups (
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
   , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
-  , deleted_tm BIGINT
-  , data_version BIGINT default 1 comment ':楽観排他用。レコードのバージョン'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
   , constraint action_permission_groups_PKC primary key (id)
 ) comment 'アクション権限グループ' ;
 
@@ -37,8 +72,8 @@ create table screen_permission_groups (
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
   , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
-  , deleted_tm BIGINT
-  , data_version BIGINT default 1 comment ':楽観排他用。レコードのバージョン'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
   , constraint screen_permission_groups_PKC primary key (id)
 ) comment '画面権限グループ' ;
 
@@ -53,8 +88,8 @@ create table actions (
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
   , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
-  , deleted_tm BIGINT
-  , data_version BIGINT default 1 comment ':楽観排他用。レコードのバージョン'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
   , constraint actions_PKC primary key (id)
 ) comment 'アクション' ;
 
@@ -69,8 +104,8 @@ create table screens (
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
   , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
-  , deleted_tm BIGINT
-  , data_version BIGINT default 1 comment ':楽観排他用。レコードのバージョン'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
   , constraint screens_PKC primary key (id)
 ) comment '画面' ;
 
@@ -88,8 +123,8 @@ create table user_permission_groups (
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
   , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
-  , deleted_tm BIGINT
-  , data_version BIGINT default 1 comment ':楽観排他用。レコードのバージョン'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
   , constraint user_permission_groups_PKC primary key (id)
 ) comment '利用者権限グループ' ;
 
@@ -104,8 +139,8 @@ create table permission_groups (
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
   , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
-  , deleted_tm BIGINT
-  , data_version BIGINT default 1 comment ':楽観排他用。レコードのバージョン'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
   , constraint permission_groups_PKC primary key (id)
 ) comment '権限グループ' ;
 
@@ -130,8 +165,8 @@ create table system_settings (
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
   , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
-  , deleted_tm BIGINT
-  , data_version BIGINT default 1 comment ':楽観排他用。レコードのバージョン'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
   , constraint system_settings_PKC primary key (id)
 ) comment 'システム設定' ;
 
@@ -148,8 +183,8 @@ create table use_salarys (
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
   , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
-  , deleted_tm BIGINT
-  , data_version BIGINT default 1 comment ':楽観排他用。レコードのバージョン'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
   , constraint use_salarys_PKC primary key (id)
 ) comment '利用有給' ;
 
@@ -167,8 +202,8 @@ create table salarys (
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
   , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
-  , deleted_tm BIGINT
-  , data_version BIGINT default 1 comment ':楽観排他用。レコードのバージョン'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
   , constraint salarys_PKC primary key (id)
 ) comment '有給' ;
 
@@ -186,8 +221,8 @@ create table password_historys (
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
   , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
-  , deleted_tm BIGINT
-  , data_version BIGINT default 1 comment ':楽観排他用。レコードのバージョン'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
   , constraint password_historys_PKC primary key (id)
 ) comment 'パスワード履歴' ;
 
@@ -211,8 +246,8 @@ create table users (
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
   , is_deleted TINYINT default 0 not null comment '削除済フラグ:0:未削除 1:削除済み'
-  , deleted_tm BIGINT
-  , data_version BIGINT default 1 comment ':楽観排他用。レコードのバージョン'
+  , deleted_tm BIGINT comment '削除日時'
+  , data_version BIGINT default 1 comment 'バージョン:楽観排他用。レコードのバージョン'
   , constraint users_PKC primary key (id)
 ) comment '利用者' ;
 
