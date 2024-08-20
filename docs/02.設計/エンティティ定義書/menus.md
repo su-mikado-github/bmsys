@@ -26,8 +26,8 @@
 |   6 | 更新日時                       | update_tm                      | BIGINT                         | Yes      |                      |                                |
 |   7 | 更新者ID                       | update_id                      | BIGINT                         | Yes      |                      |                                |
 |   8 | 削除済フラグ                   | is_deleted                     | TINYINT                        | Yes      | 0                    | 0:未削除 1:削除済み            |
-|   9 |                                | deleted_tm                     | BIGINT                         |          |                      |                                |
-|  10 |                                | data_version                   | BIGINT                         |          | 1                    | 楽観排他用。レコードのバージョン |
+|   9 | 削除日時                       | deleted_tm                     | BIGINT                         |          |                      |                                |
+|  10 | バージョン                     | data_version                   | BIGINT                         |          | 1                    | 楽観排他用。レコードのバージョン |
 
 
 
