@@ -1,5 +1,5 @@
 -- Project Name : 業務管理システム
--- Date/Time    : 2024/08/20 10:46:38
+-- Date/Time    : 2024/08/20 10:51:20
 -- Author       : Shuji Ushiyama
 -- RDBMS Type   : MySQL
 -- Application  : A5:SQL Mk-2
@@ -27,7 +27,7 @@ drop table if exists menus cascade;
 
 create table menus (
   id BIGINT AUTO_INCREMENT not null comment 'メニューID'
-  , key VARCHAR(256) not null comment 'メニュー識別キー'
+  , menu_key VARCHAR(256) not null comment 'メニュー識別キー'
   , name VARCHAR(256) comment 'メニュー名'
   , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
