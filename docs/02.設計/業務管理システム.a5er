@@ -43,6 +43,8 @@ Domain=画面ID（参照）=BIGINT
 DomainInfo="画面ID（参照）","BIGINT","",""
 Domain=アクションID（参照）=BIGINT
 DomainInfo="アクションID（参照）","BIGINT","",""
+Domain=メールアドレス=VARCHAR(128)
+DomainInfo="メールアドレス","VARCHAR(128)","",""
 Domain=社員番号=INT
 DomainInfo="社員番号","INT","",""
 Domain=姓=VARCHAR(64)
@@ -100,7 +102,7 @@ RDBMSTypeName=MySQL
 GenerateDropTableStatement=1
 DropTableIfExists=1
 BackupRestoreTempTable=0
-CommonField="作成日時","create_dt","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF
+CommonField="作成日時","create_tm","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF
 CommonField="作成者ID","create_id","*利用者ID（参照）","NOT NULL",,"","",$FFFFFFFF
 CommonField="更新日時","update_tm","*タイムスタンプ","NOT NULL",,"","",$FFFFFFFF
 CommonField="更新者ID","update_id","*利用者ID（参照）","NOT NULL",,"","",$FFFFFFFF
@@ -125,8 +127,9 @@ TableInnerOption=
 TableOption=
 Page=MAIN
 Left=1672
-Top=471
+Top=464
 Field="利用者ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="メールアドレス","email","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
 Field="社員番号","employee_no","*社員番号","NOT NULL",,"","",$FFFFFFFF,""
 Field="現在パスワード","password","*パスワード","NOT NULL",,"","ハッシュ化する事",$FFFFFFFF,""
 Field="姓","last_name","*姓","NOT NULL",,"","",$FFFFFFFF,""
@@ -139,8 +142,8 @@ Field="リマインダー・トークン","reminder_token","*リマインダー�
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20240411123655
-Position="MAIN",1672,471
+ModifiedDateTime=20240817024043
+Position="MAIN",1672,464
 ZOrder=1
 
 [Entity]
@@ -174,7 +177,7 @@ Fields1=id
 Fields2=user_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,2799,4844,4259,R,R,""
+Position="MAIN",0,2799,4844,4268,R,R,""
 Dependence=0
 Caption=
 PName=
@@ -183,7 +186,7 @@ ModifiedDateTime=20240411123217
 LineMode=0
 Bar1=280
 Bar2=484
-Bar3=426
+Bar3=427
 TermPos1=R
 TermPos2=R
 ZOrder=3
@@ -283,8 +286,8 @@ Comment=
 TableInnerOption=
 TableOption=
 Page=MAIN
-Left=945
-Top=1448
+Left=770
+Top=1563
 Field="システム設定ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
 Field="システム・プロパティ名","property_key","*識別キー","NOT NULL",,"","",$FFFFFFFF,""
 Field="システム・プロパティ・グループ","property_group","*システム・プロパティ・グループ","NOT NULL",,"\q*\q","",$FFFFFFFF,""
@@ -302,7 +305,7 @@ Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20240411140749
-Position="MAIN",945,1448
+Position="MAIN",770,1563
 ZOrder=8
 
 [Entity]
@@ -354,7 +357,7 @@ Fields1=id
 Fields2=user_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,2193,6486,3362,R,R,""
+Position="MAIN",0,2193,6486,3250,R,R,""
 Dependence=0
 Caption=
 PName=
@@ -363,7 +366,7 @@ ModifiedDateTime=20240412023020
 LineMode=0
 Bar1=219
 Bar2=649
-Bar3=336
+Bar3=325
 TermPos1=R
 TermPos2=R
 ZOrder=11

@@ -18,52 +18,21 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       TZ: Asia/Tokyo
-  # app:
-  #   build: ./app
-  #   container_name: bmsys_app
-  #   tty: true
-  #   restart: always
-  #   depends_on:
-  #     - db
-  #   volumes:
-  #     - ./app:/var/www
-  #   ports:
-  #     - "18085:8000"
-  api:
-    build: ./api
-    container_name: bmsys_api
+  app:
+    build: ./app
+    container_name: bmsys_app
     tty: true
     restart: always
     depends_on:
       - db
-    #      - redis
     volumes:
-      - ./api:/var/www
-    #      - ./api/src:/var/www/laravel
-    #      - ./api/.env.${PROFILE}:/var/www/laravel/.env
-    #      - laravel_framework_volume:/var/www/laravel/storage/framework
-    #      - laravel_vendor_volume:/var/www/laravel/vendor
+      - ./app:/var/www
+      - ./api/.env.${PROFILE}:/var/www/laravel/.env
+      # - laravel_framework_volume:/var/www/laravel/storage/framework
+      # - laravel_vendor_volume:/var/www/laravel/vendor
+      # - laravel_node_modules_volume:/var/www/laravel/node_modules
     ports:
       - "18085:8000"
-  # front:
-  #   build:
-  #     context: "./front"
-  #     dockerfile: "Dockerfile"
-  #   container_name: bmsys_front
-  #   ports:
-  #     - 8002:8000
-  #   volumes:
-  #     - ./front/app:/app
-  #   tty: true
-  #   environment:
-  #     - NODE_ENV=development
-  front:
-    build: ./front
-    container_name: bmsys_front
-    tty: true
-    restart: always
-    volumes:
-      - ./front/public:/app/public
   web:
     container_name: bmsys_web
     build:
@@ -74,9 +43,7 @@ services:
     tty: true
     restart: always
     depends_on:
-      # - app
-      - front
-      - api
+      - app
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
   flyway:
@@ -92,7 +59,7 @@ services:
       - ./flyway/sql:/flyway/sql
       - ./flyway/conf/${FLYWAY_CONF}:/flyway/conf/flyway.conf
       - ./flyway/drivers:/flyway/drivers
-volumes:
-  nuxt_node_modules:
-  laravel_framework_volume:
-  laravel_vendor_volume:
+# volumes:
+# laravel_framework_volume:
+# laravel_vendor_volume:
+# laravel_node_modules_volume:

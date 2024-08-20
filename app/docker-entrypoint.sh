@@ -1,11 +1,16 @@
 # docker-entrypoint.sh
 # Install Laravel packages
-if [ ! -e /var/www/laravel ]; then
+if [ ! -e /var/www/laravel/artisan ]; then
   cd /var/www
   composer create-project laravel/laravel:^8.0 laravel
-  cd /var/www/laravel
-  ln -s /var/www/.env.${PROFILE} .env
+fi
 
+cd /var/www/laravel
+if [ -n "$(ls /var/www/laravel/vendor)" ]; then
+  composer install
+fi
+
+if [ ! -e /var/www/laravel/storage ]; then
   mkdir -p /var/www/laravel/storage/framework/cache/data
   mkdir -p /var/www/laravel/storage/framework/app/cache
   mkdir -p /var/www/laravel/storage/framework/sessions
@@ -15,15 +20,18 @@ if [ ! -e /var/www/laravel ]; then
   chmod -R 777 /var/www/laravel/storage
 fi
 
-if [ -e /var/www/laravel ]; then
-  cd /var/www/laravel
-  composer install -n
+# if [ ! -e /var/www/laravel/node_modules ] || [ -n "$(ls /var/www/laravel/node_modules)" ]; then
+#   npm install --save @mdi/font
+#   npm install --save axios
+#   npm install --save lit
+#   npm install
+# else
+#   npm install
+# fi
 
-#if [ ! -e ./.env ]; then
-#  cp .env.local .env
-#fi
+# npm run build
 
+if [ -e /var/www/laravel/artisan ]; then
   service cron start
-
   php artisan serve --host=0.0.0.0
 fi

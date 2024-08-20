@@ -1,5 +1,5 @@
 -- Project Name : 業務管理システム
--- Date/Time    : 2024/04/19 12:04:06
+-- Date/Time    : 2024/08/17 2:54:50
 -- Author       : Shuji Ushiyama
 -- RDBMS Type   : MySQL
 -- Application  : A5:SQL Mk-2
@@ -11,7 +11,7 @@ create table action_permission_groups (
   id BIGINT AUTO_INCREMENT not null comment '画面権限グループID'
   , action_id BIGINT not null comment 'アクションID'
   , permission_group_id BIGINT not null comment '権限グループID'
-  , create_dt BIGINT not null comment '作成日時'
+  , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
@@ -32,7 +32,7 @@ create table screen_permission_groups (
   , is_update TINYINT default 0 not null comment '更新許可フラグ:0:拒否 1:許可'
   , is_delete TINYINT default 0 not null comment '削除許可フラグ:0:拒否 1:許可'
   , is_download TINYINT default 0 not null comment 'ダウンロード許可フラグ:0:拒否 1:許可'
-  , create_dt BIGINT not null comment '作成日時'
+  , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
@@ -48,7 +48,7 @@ drop table if exists actions cascade;
 create table actions (
   id BIGINT AUTO_INCREMENT not null comment 'アクションID'
   , action_key VARCHAR(256) comment 'アクション識別キー'
-  , create_dt BIGINT not null comment '作成日時'
+  , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
@@ -64,7 +64,7 @@ drop table if exists screens cascade;
 create table screens (
   id BIGINT AUTO_INCREMENT not null comment '画面ID'
   , screen_key VARCHAR(256) not null comment '画面識別キー'
-  , create_dt BIGINT not null comment '作成日時'
+  , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
@@ -83,7 +83,7 @@ create table user_permission_groups (
   , permission_group_id BIGINT not null comment '権限グループID'
   , start_date DATE default '0000-01-01' not null comment '開始日'
   , end_date DATE default '9999-12-31' not null comment '終了日'
-  , create_dt BIGINT not null comment '作成日時'
+  , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
@@ -99,7 +99,7 @@ drop table if exists permission_groups cascade;
 create table permission_groups (
   id BIGINT AUTO_INCREMENT not null comment '権限グループID'
   , name VARCHAR(256) comment '権限グループ名称'
-  , create_dt BIGINT not null comment '作成日時'
+  , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
@@ -125,7 +125,7 @@ create table system_settings (
   , double_value DOUBLE comment '浮動小数値'
   , date_value DATE comment '日付値'
   , json_value MEDIUMTEXT comment 'JSON値'
-  , create_dt BIGINT not null comment '作成日時'
+  , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
@@ -143,7 +143,7 @@ create table use_salarys (
   , user_id BIGINT not null comment '利用者ID'
   , use_date DATE not null comment '有給取得日'
   , use_days DECIMAL(2,1) not null comment '有給取得日数:0.5または1.0のいずれか'
-  , create_dt BIGINT not null comment '作成日時'
+  , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
@@ -162,7 +162,7 @@ create table salarys (
   , days INT not null comment '付与日数:1以上'
   , start_date DATE default '0000-01-01' not null comment '開始日:有給有効期間の開始日'
   , end_date DATE default '9999-12-31' not null comment '終了日:有給有効期間の終了日'
-  , create_dt BIGINT not null comment '作成日時'
+  , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
@@ -181,7 +181,7 @@ create table password_historys (
   , password VARCHAR(128) not null comment 'パスワード:ハッシュ化する事'
   , start_date DATE default '0000-01-01' not null comment '開始日:有効期間の開始日。期間に含む。'
   , end_date DATE default '9999-12-31' not null comment '終了日:有効期間の終了日。期間に含む。'
-  , create_dt BIGINT not null comment '作成日時'
+  , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
@@ -196,6 +196,7 @@ drop table if exists users cascade;
 
 create table users (
   id BIGINT AUTO_INCREMENT not null comment '利用者ID'
+  , email VARCHAR(128) not null comment 'メールアドレス'
   , employee_no INT not null comment '社員番号'
   , password VARCHAR(128) not null comment '現在パスワード:ハッシュ化する事'
   , last_name VARCHAR(64) not null comment '姓'
@@ -205,7 +206,7 @@ create table users (
   , hire_date DATE not null comment '入社日'
   , first_paid_grant_date DATE not null comment '初回有給付与日'
   , reminder_token VARCHAR(256) not null comment 'リマインダー・トークン'
-  , create_dt BIGINT not null comment '作成日時'
+  , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'
   , update_id BIGINT not null comment '更新者ID'
