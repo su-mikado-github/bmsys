@@ -1,0 +1,59 @@
+@startuml
+title: MG利用者登録フロー
+
+|システム管理者|
+start
+
+:ログイン;
+
+:利用者登録;
+note left
+(UC)MG利用者を登録する
+end note
+
+:利用者登録通知;
+note left
+(UC)登録したMG利用者にメールで通知する
+end note
+
+|MG利用者|
+:通知メール受信;
+
+:受信確認;
+note left
+(UC)記載したリンクをクリック
+end note
+
+stop
+
+@enduml
+
+@startuml
+title: メンバー登録フロー
+
+|MG利用者|
+start
+
+:ログイン;
+
+:利用者登録;
+note left
+(UC)配下のメンバーを登録する
+end note
+
+:利用者登録通知;
+note left
+(UC)登録したメンバーにメールで通知する
+end note
+
+|メンバー|
+:通知メール受信;
+
+:受信確認;
+note left
+(UC)記載したリンクをクリック
+end note
+
+stop
+
+@enduml

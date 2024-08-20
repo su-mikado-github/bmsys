@@ -14,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', \App\Http\Controllers\Pages\IndexController::class);
+Route::get('/attest', \App\Http\Controllers\Pages\AttestController::class)->name('attest');
+Route::get('/mypage', \App\Http\Controllers\Pages\MypageController::class)->name('mypage');

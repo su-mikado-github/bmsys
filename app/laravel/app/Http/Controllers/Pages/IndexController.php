@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class IndexController extends Controller
 {

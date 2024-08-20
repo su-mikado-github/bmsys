@@ -1,3 +1,120 @@
+/**
+ * セッション管理
+ */
+export class Session {
+    #userName = "wsi.session.user";
+
+    #tokenName = "wsi.session.token";
+
+    #messageName = "wsi.session.message";
+
+    isToken() {
+        return !!localStorage.getItem(this.#tokenName);
+    }
+    clearToken() {
+        localStorage.removeItem(this.#tokenName);
+    }
+    get token() {
+        return localStorage.getItem(this.#tokenName);
+    }
+    set token(value) {
+        localStorage.setItem(this.#tokenName, value ?? null);
+    }
+
+    isUser() {
+        return !!localStorage.getItem(this.#userName);
+    }
+    clearUser() {
+        localStorage.removeItem(this.#userName);
+    }
+    get user() {
+        const user = localStorage.getItem(this.#userName);
+        return !user ? null : JSON.parse(localStorage.getItem(this.#userName));
+    }
+    set user(value) {
+        localStorage.setItem(this.#userName, JSON.stringify(value));
+    }
+
+    isMessage() {
+        return !!localStorage.getItem(this.#messageName);
+    }
+
+    clearMessage() {
+        localStorage.removeItem(this.#messageName);
+    }
+
+    get message() {
+        const message = localStorage.getItem(this.#messageName);
+        return !message ? null : JSON.parse(message);
+    }
+
+    showMessage(type, message) {
+        localStorage.setItem(
+            this.#messageName,
+            JSON.stringify({ type, message })
+        );
+    }
+}
+
+export class Api {
+    #prefix = "/api";
+
+    #session = new Session();
+
+    constructor() {
+        //
+    }
+
+    get prefix() {
+        return this.#prefix;
+    }
+
+    get(path, query) {
+        const token = this.#session.token;
+        const url = `${this.prefix}${path}`;
+        return window.axios.get(url, {
+            params: query ?? {},
+            headers: { Authorization: `Bearer ${token ?? ""}` },
+        });
+    }
+
+    post(path, requestBody, query) {
+        const token = this.#session.token;
+        const url = `${this.prefix}${path}`;
+        return window.axios.post(url, requestBody, {
+            params: query ?? {},
+            headers: { Authorization: `Bearer ${token ?? ""}` },
+        });
+    }
+
+    put(path, requestBody, query) {
+        const token = this.#session.token;
+        const url = `${this.prefix}${path}`;
+        return window.axios.put(url, requestBody, {
+            params: query ?? {},
+            headers: { Authorization: `Bearer ${token ?? ""}` },
+        });
+    }
+
+    patch(path, requestBody, query) {
+        const token = this.#session.token;
+        const url = `${this.prefix}${path}`;
+        return window.axios.patch(url, requestBody, {
+            params: query ?? {},
+            headers: { Authorization: `Bearer ${token ?? ""}` },
+        });
+    }
+
+    delete(path, query) {
+        const token = this.#session.token;
+        const url = `${this.prefix}${path}`;
+        return window.axios.delete(url, {
+            params: query ?? {},
+            headers: { Authorization: `Bearer ${token ?? ""}` },
+        });
+    }
+}
+
 export class Template {
     #target = null;
 
@@ -22,13 +139,17 @@ export class Template {
 }
 
 export class Component {
+    #id = null;
+
     #target = null;
 
     #owner = null;
 
     #value = null;
 
-    constructor(target, owner) {
+    #components = [];
+
+    constructor(target) {
         if (target instanceof HTMLTemplateElement) {
             this.#target = target.content.cloneNode(true).firstElementChild;
         } else if (target instanceof HTMLElement) {
@@ -38,11 +159,13 @@ export class Component {
         } else {
             throw new Exception("Unspported type target.");
         }
-        this.#owner = owner;
+        if (!!this.#target.id) {
+            this.#id = this.#target.id;
+        }
     }
 
     get id() {
-        return this.target.id;
+        return this.#id;
     }
 
     get target() {
@@ -51,6 +174,9 @@ export class Component {
 
     get owner() {
         return this.#owner;
+    }
+    set owner(value) {
+        this.#owner = value;
     }
 
     get checked() {
@@ -133,23 +259,43 @@ export class Component {
 
     init() {
         //
+        this.#components.forEach((component) => component.init());
         return true;
     }
 
     on(eventName, handler) {
-        if (typeof handler === "undefined") {
+        let method = null;
+        if (typeof eventName === "string" && typeof handler === "undefined") {
             if (typeof this.id === "string") {
                 const handlerName = `${this.id}_${eventName}`;
-                if (typeof this[handlerName] === "function") {
-                    this.target.addEventListener(eventName, this[handlerName]);
+                if (typeof this.owner[handlerName] === "function") {
+                    method = (e) => this.owner[handlerName](e);
                 }
+            } else if (typeof this.owner[eventName] === "function") {
+                method = (e) => this.owner[eventName](e);
+            } else {
+                console.log({ eventName });
+                throw new Exception("Illegal arguments of [on] method.");
             }
-        } else if (typeof handler === "string") {
-            if (typeof this[handler] === "function") {
-                this.target.addEventListener(eventName, this[handler]);
+        } else if (
+            typeof eventName === "string" &&
+            typeof handler === "string"
+        ) {
+            if (typeof this.owner[handler] === "function") {
+                method = (e) => this.owner[handler](e);
             }
-        } else if (typeof handler === "function") {
-            this.target.addEventListener(eventName, handler);
+        } else if (
+            typeof eventName === "string" &&
+            typeof handler === "function"
+        ) {
+            method = handler;
+        } else {
+            console.log({ eventName, handler });
+            throw new Exception("Illegal arguments of [on] method.");
+        }
+
+        if (typeof method === "function") {
+            this.target.addEventListener(eventName, method);
         }
         return this;
     }
@@ -181,7 +327,7 @@ export class Component {
         }
     }
 
-    find(selector, wrapper) {
+    query(selector, wrapper) {
         if (typeof wrapper === "undefined") {
             wrapper = (dom) => new Component(dom);
         }
@@ -189,30 +335,44 @@ export class Component {
         if (!dom) {
             throw new Exception(`Not found ${selector ?? "null"}`);
         }
-        return wrapper(dom);
+        const result = wrapper(dom);
+        result.owner = this;
+        this.#components.push(result);
+        return result;
     }
 
-    finds(selector, wrapper) {
+    queryAll(selector, wrapper) {
         if (typeof wrapper === "undefined") {
             wrapper = (dom) => new Component(dom);
         }
-        return Array.from(this.target?.querySelectorAll(selector)).map(wrapper);
+        return Array.from(this.target?.querySelectorAll(selector))
+            .map(wrapper)
+            .map(
+                (result) => (
+                    (result.owner = this), this.#components.push(result), result
+                )
+            );
     }
 
-    nameOf(name, wrapper) {
-        if (typeof wrapper === "undefined") {
-            wrapper = (dom) => new Component(dom);
-        }
-        const domList = Array.from(
-            this.target?.querySelectorAll(`[name='${name}']`)
-        );
-        if (domList.length === 1) {
-            return wrapper(domList.shift());
-        } else if (domList.length > 0) {
-            return domList.map(wrapper);
-        } else {
-            return null;
-        }
+    find(id, wrapper) {
+        const selector = "#" + (!!this.id ? `${this.id}_${id}` : id);
+        return this.query(selector, wrapper);
+    }
+
+    field(fieldName, wrapper) {
+        return this.query(`[data-field='${fieldName}']`, wrapper);
+    }
+
+    fields(fieldName, wrapper) {
+        return this.queryAll(`[data-field='${fieldName}']`, wrapper);
+    }
+
+    form(name, wrapper) {
+        return this.query(`[name='${name}']`, wrapper);
+    }
+
+    form(name, wrapper) {
+        return this.queryAll(`[name='${name}']`, wrapper);
     }
 
     clear() {
@@ -390,12 +550,28 @@ export class Component {
         }
         return this;
     }
+
+    forward(url) {
+        location.assign(url);
+    }
 }
 
 export class Panel extends Component {
+    #api = new Api();
+
+    #session = new Session();
+
     constructor(target) {
         super(target);
         //
+    }
+
+    get api() {
+        return this.#api;
+    }
+
+    get session() {
+        return this.#session;
     }
 }
 
@@ -431,6 +607,8 @@ export class Dialog extends Panel {
 }
 
 export class Page extends Panel {
+    #api = new Api();
+
     static run(page) {
         window.addEventListener("load", () => {
             if (!!page) {
@@ -443,6 +621,10 @@ export class Page extends Panel {
 
     constructor() {
         super(document.body);
+    }
+
+    get api() {
+        return this.#api;
     }
 
     exitFullscreen() {

@@ -5,7 +5,7 @@ import { Page } from "/wsi.js";
 import { Header } from "/js/bmsys-panels.js";
 
 class Index extends Page {
-    #header = this.find("#header");
+    #header = this.find("header", (dom)=>new Header(dom));
 
     constructor() {
         super();
@@ -20,11 +20,7 @@ Page.run(new Index());
 </x-script>
 
 @push('headers')
-@auth
 <x-panels.header id="header" class="p-2" />
-@else
-<x-panels.guest-header id="header" class="p-2" />
-@endauth
 @endpush
 
 @section('main')

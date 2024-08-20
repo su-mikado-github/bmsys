@@ -1,0 +1,22 @@
+@startuml
+title dockerコンテナの配置と依存関係
+
+node "docker-compose" {
+    node アプリケーション as app
+    node データベース as db
+    node マイグレーション as flyway
+    node リバースプロキシ as web
+}
+
+' "docker-compose" -- app : 常時起動コンテナ
+' "docker-compose" -- db : 常時起動コンテナ
+' "docker-compose" -- flyway : 常時起動コンテナ
+' "docker-compose" -- web : 常時起動コンテナ
+
+web443 ..> web
+
+app --> db : 依存する
+flyway --> db : 依存する
+web --> app : 依存する
+
+@enduml

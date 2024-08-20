@@ -28,7 +28,6 @@ class InitialDataSeeder extends Seeder
             'first_name_hirakana' => 'かんりしゃ',
             'hire_date' => '2024-10-01',
             'first_paid_grant_date' => '2024-10-01',
-            'reminder_token' => Hash::make(Str::random(16)),
             'create_tm' => 0,
             'create_id' => 0,
             'update_tm' => 0,

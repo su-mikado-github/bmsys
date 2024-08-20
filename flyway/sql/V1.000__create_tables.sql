@@ -1,5 +1,5 @@
 -- Project Name : 業務管理システム
--- Date/Time    : 2024/08/20 10:51:20
+-- Date/Time    : 2024/08/21 0:51:05
 -- Author       : Shuji Ushiyama
 -- RDBMS Type   : MySQL
 -- Application  : A5:SQL Mk-2
@@ -240,7 +240,8 @@ create table users (
   , first_name_hirakana VARCHAR(128) not null comment '名かな'
   , hire_date DATE not null comment '入社日'
   , first_paid_grant_date DATE not null comment '初回有給付与日'
-  , reminder_token VARCHAR(256) not null comment 'リマインダー・トークン'
+  , email_verified_at BIGINT comment 'email_verified_at:Laravel sanctum API認証'
+  , remember_token VARCHAR(1024) comment 'リメンバー・トークン'
   , create_tm BIGINT not null comment '作成日時'
   , create_id BIGINT not null comment '作成者ID'
   , update_tm BIGINT not null comment '更新日時'

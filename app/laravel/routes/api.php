@@ -18,4 +18,9 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('/users-attest', [ \App\Http\Controllers\Api\UserController::class, 'attest' ]);
+Route::post('/users-attest', [ \App\Http\Controllers\Api\UsersController::class, 'attest' ]);
+
+Route::group(['middleware'=>['auth:sanctum']], function() {
+    Route::get('/users', [ \App\Http\Controllers\Api\UsersController::class, 'get' ]);
+    Route::post('/logout', [ \App\Http\Controllers\Api\UsersController::class, 'logout' ]);
+});

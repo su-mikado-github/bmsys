@@ -19,6 +19,8 @@ Domain=タイムスタンプ=BIGINT
 DomainInfo="タイムスタンプ","BIGINT","",""
 Domain=日付=DATE
 DomainInfo="日付","DATE","",""
+Domain=日時=DATETIME
+DomainInfo="日時","DATETIME","",""
 Domain=日数=INT
 DomainInfo="日数","INT","",""
 Domain=整数=INT
@@ -69,8 +71,8 @@ Domain=開始日=DATE
 DomainInfo="開始日","DATE","レコードの有効期間の開始日","start_date"
 Domain=終了日=DATE
 DomainInfo="終了日","DATE","レコードの有効期間の終了日。期間に含む。最大値は9999-12-31","end_date"
-Domain=リマインダー・トークン=VARCHAR(256)
-DomainInfo="リマインダー・トークン","VARCHAR(256)","","reminder_token"
+Domain=トークン=VARCHAR(1024)
+DomainInfo="トークン","VARCHAR(1024)","",""
 Domain=有給取得日数=DECIMAL(2,1)
 DomainInfo="有給取得日数","DECIMAL(2,1)","正の数。0.5または1.0のいずれか",""
 Domain=識別キー=VARCHAR(256)
@@ -130,8 +132,8 @@ Comment=
 TableInnerOption=
 TableOption=
 Page=MAIN
-Left=1672
-Top=464
+Left=1667
+Top=458
 Field="利用者ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
 Field="メールアドレス","email","*メールアドレス","NOT NULL",,"","",$FFFFFFFF,""
 Field="社員番号","employee_no","*社員番号","NOT NULL",,"","",$FFFFFFFF,""
@@ -142,12 +144,13 @@ Field="姓かな","last_name_hirakana","*姓かな","NOT NULL",,"","",$FFFFFFFF,
 Field="名かな","first_name_hirakana","*名かな","NOT NULL",,"","",$FFFFFFFF,""
 Field="入社日","hire_date","*入社日","NOT NULL",,"","",$FFFFFFFF,""
 Field="初回有給付与日","first_paid_grant_date","*有給付与日","NOT NULL",,"","",$FFFFFFFF,""
-Field="リマインダー・トークン","reminder_token","*リマインダー・トークン","NOT NULL",,"","",$FFFFFFFF,""
+Field="email_verified_at","email_verified_at","*タイムスタンプ",,,"","Laravel sanctum API認証",$FFFFFFFF,""
+Field="リメンバー・トークン","remember_token","*トークン",,,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20240817024043
-Position="MAIN",1672,464
+ModifiedDateTime=20240821005055
+Position="MAIN",1667,458
 ZOrder=1
 
 [Entity]
@@ -181,16 +184,16 @@ Fields1=id
 Fields2=user_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,2799,4844,4268,R,R,""
+Position="MAIN",0,2769,4844,4283,R,R,""
 Dependence=0
 Caption=
 PName=
 NoDDL=1
 ModifiedDateTime=20240411123217
 LineMode=0
-Bar1=280
+Bar1=277
 Bar2=484
-Bar3=427
+Bar3=428
 TermPos1=R
 TermPos2=R
 ZOrder=3
@@ -202,8 +205,8 @@ Comment=
 TableInnerOption=
 TableOption=
 Page=MAIN
-Left=1753
-Top=989
+Left=1720
+Top=988
 Field="有給ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
 Field="利用者ID","user_id","*利用者ID（参照）","NOT NULL",,"","",$FFFFFFFF,""
 Field="付与日数","days","*日数","NOT NULL",,"","1以上",$FFFFFFFF,""
@@ -214,7 +217,7 @@ Tag=履歴
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20240411124329
-Position="MAIN",1753,989
+Position="MAIN",1720,988
 ZOrder=4
 
 [Relation]
@@ -226,7 +229,7 @@ Fields1=id
 Fields2=user_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,4634,5688,4336,R,R,""
+Position="MAIN",0,4634,5688,4245,R,R,""
 Dependence=0
 Caption=
 PName=
@@ -235,7 +238,7 @@ ModifiedDateTime=20240411124354
 LineMode=0
 Bar1=463
 Bar2=569
-Bar3=434
+Bar3=424
 TermPos1=R
 TermPos2=R
 ZOrder=5
@@ -361,7 +364,7 @@ Fields1=id
 Fields2=user_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,2193,6486,3250,R,R,""
+Position="MAIN",0,2193,6486,3216,R,R,""
 Dependence=0
 Caption=
 PName=
@@ -370,7 +373,7 @@ ModifiedDateTime=20240412023020
 LineMode=0
 Bar1=219
 Bar2=649
-Bar3=325
+Bar3=322
 TermPos1=R
 TermPos2=R
 ZOrder=11
