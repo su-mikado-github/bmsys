@@ -10,7 +10,7 @@ Author=Shuji Ushiyama
 MaxEntityRowShow=1000
 ReadOnlyRecommend=0
 Page=Main
-PageInfo="Main",7,"A3Landscape",$FFFFFF
+PageInfo="Main",7,"B4Landscape",$FFFFFF
 Page=退避
 PageInfo="退避",2,"A3Landscape",$FFFFFF
 Domain=フラグ=TINYINT
@@ -43,6 +43,8 @@ Domain=画面ID（参照）=BIGINT
 DomainInfo="画面ID（参照）","BIGINT","",""
 Domain=アクションID（参照）=BIGINT
 DomainInfo="アクションID（参照）","BIGINT","",""
+Domain=メニューID（参照）=BIGINT
+DomainInfo="メニューID（参照）","BIGINT","",""
 Domain=メールアドレス=VARCHAR(128)
 DomainInfo="メールアドレス","VARCHAR(128)","",""
 Domain=社員番号=INT
@@ -81,6 +83,8 @@ Domain=システム・プロパティ・グループ=VARCHAR(256)
 DomainInfo="システム・プロパティ・グループ","VARCHAR(256)","",""
 Domain=名称=VARCHAR(256)
 DomainInfo="名称","VARCHAR(256)","",""
+Domain=順序=BIGINT
+DomainInfo="順序","BIGINT","",""
 LogicalView=1
 DecodeDomain=0
 ViewModePageIndividually=1
@@ -286,8 +290,8 @@ Comment=
 TableInnerOption=
 TableOption=
 Page=MAIN
-Left=770
-Top=1563
+Left=657
+Top=1550
 Field="システム設定ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
 Field="システム・プロパティ名","property_key","*識別キー","NOT NULL",,"","",$FFFFFFFF,""
 Field="システム・プロパティ・グループ","property_group","*システム・プロパティ・グループ","NOT NULL",,"\q*\q","",$FFFFFFFF,""
@@ -305,7 +309,7 @@ Tag=マスタ
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20240411140749
-Position="MAIN",770,1563
+Position="MAIN",657,1550
 ZOrder=8
 
 [Entity]
@@ -542,3 +546,65 @@ Bar3=470
 TermPos1=R
 TermPos2=R
 ZOrder=21
+
+[Entity]
+PName=menus
+LName=メニュー
+Comment=
+TableInnerOption=
+TableOption=
+Page=Main
+Left=1718
+Top=1360
+Field="メニューID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="メニュー識別キー","key","*識別キー","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニュー名","name","*名称",,,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240820102027
+Position="Main",1718,1360
+ZOrder=22
+
+[Entity]
+PName=menu_items
+LName=メニュー項目
+Comment=
+TableInnerOption=
+TableOption=
+Page=Main
+Left=1651
+Top=1575
+Field="メニュー項目ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
+Field="メニューID","menu_id","*メニューID（参照）","NOT NULL",,"","",$FFFFFFFF,""
+Field="表示順","display_order","*順序","NOT NULL",,"0","",$FFFFFFFF,""
+Field="画面識別キー","screen_key","*識別キー","NOT NULL",,"","",$FFFFFFFF,""
+EffectMode=None
+Color=$000000
+BkColor=$FFFFFF
+ModifiedDateTime=20240820102919
+Position="Main",1651,1575
+ZOrder=23
+
+[Relation]
+Entity1=menus
+Entity2=menu_items
+RelationType1=2
+RelationType2=3
+Fields1=id
+Fields2=menu_id
+Cardinarity1=
+Cardinarity2=
+Position="MAIN",0,4775,5821,4563,R,R,""
+Dependence=0
+Caption=
+PName=
+NoDDL=1
+ModifiedDateTime=20240820102949
+LineMode=0
+Bar1=478
+Bar2=582
+Bar3=456
+TermPos1=R
+TermPos2=R
+ZOrder=24
