@@ -12,7 +12,7 @@ ReadOnlyRecommend=0
 Page=Main
 PageInfo="Main",7,"B4Landscape",$FFFFFF
 Page=退避
-PageInfo="退避",2,"A3Landscape",$FFFFFF
+PageInfo="退避",7,"B4Landscape",$FFFFFF
 Domain=フラグ=TINYINT
 DomainInfo="フラグ","TINYINT","0:OFF 1:ON",""
 Domain=タイムスタンプ=BIGINT
@@ -49,6 +49,8 @@ Domain=メニューID（参照）=BIGINT
 DomainInfo="メニューID（参照）","BIGINT","",""
 Domain=メールアドレス=VARCHAR(128)
 DomainInfo="メールアドレス","VARCHAR(128)","",""
+Domain=グループ番号=INT
+DomainInfo="グループ番号","INT","",""
 Domain=社員番号=INT
 DomainInfo="社員番号","INT","",""
 Domain=姓=VARCHAR(64)
@@ -89,6 +91,8 @@ Domain=略称=VARCHAR(128)
 DomainInfo="略称","VARCHAR(128)","",""
 Domain=順序=BIGINT
 DomainInfo="順序","BIGINT","",""
+Domain=アイコン名=VARCHAR(128)
+DomainInfo="アイコン名","VARCHAR(128)","",""
 LogicalView=1
 DecodeDomain=0
 ViewModePageIndividually=1
@@ -417,11 +421,12 @@ Field="画面ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
 Field="画面識別キー","screen_key","*識別キー","NOT NULL",,"","",$FFFFFFFF,""
 Field="タイトル","name","*名称",,,"","",$FFFFFFFF,""
 Field="タイトル略称","short_name","*略称",,,"","",$FFFFFFFF,""
+Field="画面アイコン","icon","*アイコン名",,,"","",$FFFFFFFF,""
 Field="表示順","display_order","*順序","NOT NULL",,"0","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20240824155416
+ModifiedDateTime=20240824220005
 Position="MAIN",563,1014
 ZOrder=13
 
@@ -432,8 +437,8 @@ Comment=
 TableInnerOption=
 TableOption=
 Page=退避
-Left=861
-Top=1179
+Left=892
+Top=1177
 Field="アクションID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
 Field="アクション識別キー","action_key","*識別キー","NOT NULL",,"","",$FFFFFFFF,""
 Field="名称","name","*名称",,,"","",$FFFFFFFF,""
@@ -441,7 +446,7 @@ EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
 ModifiedDateTime=20240824175338
-Position="退避",861,1179
+Position="退避",892,1177
 ZOrder=14
 
 [Entity]
@@ -543,7 +548,7 @@ Fields1=id
 Fields2=action_id
 Cardinarity1=
 Cardinarity2=
-Position="退避",0,4703,5297,4242,R,R,""
+Position="退避",0,4703,5297,4165,R,R,""
 Dependence=0
 Caption=
 PName=
@@ -552,7 +557,7 @@ ModifiedDateTime=20240412160501
 LineMode=0
 Bar1=470
 Bar2=530
-Bar3=424
+Bar3=416
 TermPos1=R
 TermPos2=R
 ZOrder=21
@@ -583,17 +588,18 @@ Comment=
 TableInnerOption=
 TableOption=
 Page=MAIN
-Left=1651
+Left=1615
 Top=1575
 Field="メニュー項目ID","id","*レコードID","NOT NULL",0,"","",$FFFFFFFF,""
 Field="メニューID","menu_id","*メニューID（参照）","NOT NULL",,"","",$FFFFFFFF,""
+Field="メニュー・グループ番号","menu_group_no","*グループ番号","NOT NULL",,"0","",$FFFFFFFF,""
 Field="表示順","display_order","*順序","NOT NULL",,"0","",$FFFFFFFF,""
-Field="画面識別キー","screen_key","*識別キー","NOT NULL",,"","",$FFFFFFFF,""
+Field="画面ID","screen_id","*画面ID（参照）","NOT NULL",,"","",$FFFFFFFF,""
 EffectMode=None
 Color=$000000
 BkColor=$FFFFFF
-ModifiedDateTime=20240820102919
-Position="MAIN",1651,1575
+ModifiedDateTime=20240824183528
+Position="MAIN",1615,1575
 ZOrder=23
 
 [Relation]
@@ -605,7 +611,7 @@ Fields1=id
 Fields2=menu_id
 Cardinarity1=
 Cardinarity2=
-Position="MAIN",0,4775,5821,4662,R,R,""
+Position="MAIN",0,4775,5821,4594,R,R,""
 Dependence=0
 Caption=
 PName=
@@ -614,7 +620,7 @@ ModifiedDateTime=20240820102949
 LineMode=0
 Bar1=478
 Bar2=582
-Bar3=466
+Bar3=459
 TermPos1=R
 TermPos2=R
 ZOrder=24

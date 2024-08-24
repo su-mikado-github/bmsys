@@ -9,7 +9,7 @@
 | 物理エンティティ名             | use_salarys                                                                                          |
 | 論理エンティティ名             | 利用有給                                                                                             |
 | 作成者                         | Shuji Ushiyama                                                                                       |
-| 作成日                         | 2024/08/20                                                                                           |
+| 作成日                         | 2024/08/24                                                                                           |
 | タグ                           |                                                                                                      |
 
 
@@ -18,17 +18,17 @@
 
 | No. | 論理名                         | 物理名                         | データ型                       | Not Null | デフォルト           | 備考                           |
 |----:|:-------------------------------|:-------------------------------|:-------------------------------|:---------|:---------------------|:-------------------------------|
-|   1 | 利用有給ID                     | id                             | BIGINT AUTO_INCREMENT          | Yes (PK) |                      |                                |
-|   2 | 利用者ID                       | user_id                        | BIGINT                         | Yes      |                      |                                |
-|   3 | 有給取得日                     | use_date                       | DATE                           | Yes      |                      |                                |
-|   4 | 有給取得日数                   | use_days                       | DECIMAL(2,1)                   | Yes      |                      | 0.5または1.0のいずれか         |
-|   5 | 作成日時                       | create_tm                      | BIGINT                         | Yes      |                      |                                |
-|   6 | 作成者ID                       | create_id                      | BIGINT                         | Yes      |                      |                                |
-|   7 | 更新日時                       | update_tm                      | BIGINT                         | Yes      |                      |                                |
-|   8 | 更新者ID                       | update_id                      | BIGINT                         | Yes      |                      |                                |
-|   9 | 削除済フラグ                   | is_deleted                     | TINYINT                        | Yes      | 0                    | 0:未削除 1:削除済み            |
-|  10 | 削除日時                       | deleted_tm                     | BIGINT                         |          |                      |                                |
-|  11 | バージョン                     | data_version                   | BIGINT                         |          | 1                    | 楽観排他用。レコードのバージョン |
+|   1 | 利用有給ID                     | id                             | *レコードID                    | Yes (PK) |                      |                                |
+|   2 | 利用者ID                       | user_id                        | *利用者ID（参照）              | Yes      |                      |                                |
+|   3 | 有給取得日                     | use_date                       | *日付                          | Yes      |                      |                                |
+|   4 | 有給取得日数                   | use_days                       | *有給取得日数                  | Yes      |                      | 0.5または1.0のいずれか         |
+|   5 | 作成日時                       | create_tm                      | *タイムスタンプ                | Yes      | 0                    |                                |
+|   6 | 作成者ID                       | create_id                      | *利用者ID（参照）              | Yes      | 0                    |                                |
+|   7 | 更新日時                       | update_tm                      | *タイムスタンプ                | Yes      | 0                    |                                |
+|   8 | 更新者ID                       | update_id                      | *利用者ID（参照）              | Yes      | 0                    |                                |
+|   9 | 削除済フラグ                   | is_deleted                     | *フラグ                        | Yes      | 0                    | 0:未削除 1:削除済み            |
+|  10 | 削除日時                       | deleted_tm                     | *タイムスタンプ                |          |                      |                                |
+|  11 | バージョン                     | data_version                   | *データ・バージョン            | Yes      | 1                    | 楽観排他用。レコードのバージョン |
 
 
 

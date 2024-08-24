@@ -9,7 +9,7 @@
 | 物理エンティティ名             | users                                                                                                |
 | 論理エンティティ名             | 利用者                                                                                               |
 | 作成者                         | Shuji Ushiyama                                                                                       |
-| 作成日                         | 2024/08/20                                                                                           |
+| 作成日                         | 2024/08/24                                                                                           |
 | タグ                           |                                                                                                      |
 
 
@@ -18,24 +18,25 @@
 
 | No. | 論理名                         | 物理名                         | データ型                       | Not Null | デフォルト           | 備考                           |
 |----:|:-------------------------------|:-------------------------------|:-------------------------------|:---------|:---------------------|:-------------------------------|
-|   1 | 利用者ID                       | id                             | BIGINT AUTO_INCREMENT          | Yes (PK) |                      |                                |
-|   2 | メールアドレス                 | email                          | VARCHAR(128)                   | Yes      |                      |                                |
-|   3 | 社員番号                       | employee_no                    | INT                            | Yes      |                      |                                |
-|   4 | 現在パスワード                 | password                       | VARCHAR(128)                   | Yes      |                      | ハッシュ化する事               |
-|   5 | 姓                             | last_name                      | VARCHAR(64)                    | Yes      |                      |                                |
-|   6 | 名                             | first_name                     | VARCHAR(64)                    | Yes      |                      |                                |
-|   7 | 姓かな                         | last_name_hirakana             | VARCHAR(128)                   | Yes      |                      |                                |
-|   8 | 名かな                         | first_name_hirakana            | VARCHAR(128)                   | Yes      |                      |                                |
-|   9 | 入社日                         | hire_date                      | DATE                           | Yes      |                      |                                |
-|  10 | 初回有給付与日                 | first_paid_grant_date          | DATE                           | Yes      |                      |                                |
-|  11 | リマインダー・トークン         | reminder_token                 | VARCHAR(256)                   | Yes      |                      |                                |
-|  12 | 作成日時                       | create_tm                      | BIGINT                         | Yes      |                      |                                |
-|  13 | 作成者ID                       | create_id                      | BIGINT                         | Yes      |                      |                                |
-|  14 | 更新日時                       | update_tm                      | BIGINT                         | Yes      |                      |                                |
-|  15 | 更新者ID                       | update_id                      | BIGINT                         | Yes      |                      |                                |
-|  16 | 削除済フラグ                   | is_deleted                     | TINYINT                        | Yes      | 0                    | 0:未削除 1:削除済み            |
-|  17 | 削除日時                       | deleted_tm                     | BIGINT                         |          |                      |                                |
-|  18 | バージョン                     | data_version                   | BIGINT                         |          | 1                    | 楽観排他用。レコードのバージョン |
+|   1 | 利用者ID                       | id                             | *レコードID                    | Yes (PK) |                      |                                |
+|   2 | メールアドレス                 | email                          | *メールアドレス                | Yes      |                      |                                |
+|   3 | 社員番号                       | employee_no                    | *社員番号                      | Yes      |                      |                                |
+|   4 | 現在パスワード                 | password                       | *パスワード                    | Yes      |                      | ハッシュ化する事               |
+|   5 | 姓                             | last_name                      | *姓                            | Yes      |                      |                                |
+|   6 | 名                             | first_name                     | *名                            | Yes      |                      |                                |
+|   7 | 姓かな                         | last_name_hirakana             | *姓かな                        | Yes      |                      |                                |
+|   8 | 名かな                         | first_name_hirakana            | *名かな                        | Yes      |                      |                                |
+|   9 | 入社日                         | hire_date                      | *入社日                        | Yes      |                      |                                |
+|  10 | 初回有給付与日                 | first_paid_grant_date          | *有給付与日                    | Yes      |                      |                                |
+|  11 | email_verified_at              | email_verified_at              | *タイムスタンプ                |          |                      | Laravel sanctum API認証        |
+|  12 | リメンバー・トークン           | remember_token                 | *トークン                      |          |                      |                                |
+|  13 | 作成日時                       | create_tm                      | *タイムスタンプ                | Yes      | 0                    |                                |
+|  14 | 作成者ID                       | create_id                      | *利用者ID（参照）              | Yes      | 0                    |                                |
+|  15 | 更新日時                       | update_tm                      | *タイムスタンプ                | Yes      | 0                    |                                |
+|  16 | 更新者ID                       | update_id                      | *利用者ID（参照）              | Yes      | 0                    |                                |
+|  17 | 削除済フラグ                   | is_deleted                     | *フラグ                        | Yes      | 0                    | 0:未削除 1:削除済み            |
+|  18 | 削除日時                       | deleted_tm                     | *タイムスタンプ                |          |                      |                                |
+|  19 | バージョン                     | data_version                   | *データ・バージョン            | Yes      | 1                    | 楽観排他用。レコードのバージョン |
 
 
 
@@ -57,7 +58,7 @@
 
 | No. | 動詞句                         | カラムリスト                             | 参照元                         | 参照元カラムリスト                       | ON DELETE    | ON UPDATE    |
 |----:|:-------------------------------|:-----------------------------------------|:-------------------------------|:-----------------------------------------|:-------------|:-------------|
-|   1 |                                | id                                       | user_permission_groups         | user_id                                  |              |              |
+|   1 |                                | id                                       | user_roles                     | user_id                                  |              |              |
 |   2 |                                | id                                       | use_salarys                    | user_id                                  |              |              |
 |   3 |                                | id                                       | salarys                        | user_id                                  |              |              |
 |   4 |                                | id                                       | password_historys              | user_id                                  |              |              |

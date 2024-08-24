@@ -9,7 +9,7 @@
 | 物理エンティティ名             | menu_items                                                                                           |
 | 論理エンティティ名             | メニュー項目                                                                                         |
 | 作成者                         | Shuji Ushiyama                                                                                       |
-| 作成日                         | 2024/08/20                                                                                           |
+| 作成日                         | 2024/08/24                                                                                           |
 | タグ                           |                                                                                                      |
 
 
@@ -18,17 +18,18 @@
 
 | No. | 論理名                         | 物理名                         | データ型                       | Not Null | デフォルト           | 備考                           |
 |----:|:-------------------------------|:-------------------------------|:-------------------------------|:---------|:---------------------|:-------------------------------|
-|   1 | メニュー項目ID                 | id                             | BIGINT AUTO_INCREMENT          | Yes (PK) |                      |                                |
-|   2 | メニューID                     | menu_id                        | BIGINT                         | Yes      |                      |                                |
-|   3 | 表示順                         | display_order                  | BIGINT                         | Yes      | 0                    |                                |
-|   4 | 画面識別キー                   | screen_key                     | VARCHAR(256)                   | Yes      |                      |                                |
-|   5 | 作成日時                       | create_tm                      | BIGINT                         | Yes      |                      |                                |
-|   6 | 作成者ID                       | create_id                      | BIGINT                         | Yes      |                      |                                |
-|   7 | 更新日時                       | update_tm                      | BIGINT                         | Yes      |                      |                                |
-|   8 | 更新者ID                       | update_id                      | BIGINT                         | Yes      |                      |                                |
-|   9 | 削除済フラグ                   | is_deleted                     | TINYINT                        | Yes      | 0                    | 0:未削除 1:削除済み            |
-|  10 | 削除日時                       | deleted_tm                     | BIGINT                         |          |                      |                                |
-|  11 | バージョン                     | data_version                   | BIGINT                         |          | 1                    | 楽観排他用。レコードのバージョン |
+|   1 | メニュー項目ID                 | id                             | *レコードID                    | Yes (PK) |                      |                                |
+|   2 | メニューID                     | menu_id                        | *メニューID（参照）            | Yes      |                      |                                |
+|   3 | メニュー・グループ番号         | menu_group_no                  | *グループ番号                  | Yes      | 0                    |                                |
+|   4 | 表示順                         | display_order                  | *順序                          | Yes      | 0                    |                                |
+|   5 | 画面ID                         | screen_id                      | *画面ID（参照）                | Yes      |                      |                                |
+|   6 | 作成日時                       | create_tm                      | *タイムスタンプ                | Yes      | 0                    |                                |
+|   7 | 作成者ID                       | create_id                      | *利用者ID（参照）              | Yes      | 0                    |                                |
+|   8 | 更新日時                       | update_tm                      | *タイムスタンプ                | Yes      | 0                    |                                |
+|   9 | 更新者ID                       | update_id                      | *利用者ID（参照）              | Yes      | 0                    |                                |
+|  10 | 削除済フラグ                   | is_deleted                     | *フラグ                        | Yes      | 0                    | 0:未削除 1:削除済み            |
+|  11 | 削除日時                       | deleted_tm                     | *タイムスタンプ                |          |                      |                                |
+|  12 | バージョン                     | data_version                   | *データ・バージョン            | Yes      | 1                    | 楽観排他用。レコードのバージョン |
 
 
 

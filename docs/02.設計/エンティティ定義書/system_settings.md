@@ -9,7 +9,7 @@
 | 物理エンティティ名             | system_settings                                                                                      |
 | 論理エンティティ名             | システム設定                                                                                         |
 | 作成者                         | Shuji Ushiyama                                                                                       |
-| 作成日                         | 2024/08/20                                                                                           |
+| 作成日                         | 2024/08/24                                                                                           |
 | タグ                           | マスタ                                                                                               |
 
 
@@ -18,25 +18,25 @@
 
 | No. | 論理名                         | 物理名                         | データ型                       | Not Null | デフォルト           | 備考                           |
 |----:|:-------------------------------|:-------------------------------|:-------------------------------|:---------|:---------------------|:-------------------------------|
-|   1 | システム設定ID                 | id                             | BIGINT AUTO_INCREMENT          | Yes (PK) |                      |                                |
-|   2 | システム・プロパティ名         | property_key                   | VARCHAR(256)                   | Yes      |                      |                                |
-|   3 | システム・プロパティ・グループ | property_group                 | VARCHAR(256)                   | Yes      | '*'                  |                                |
-|   4 | データ型                       | data_type                      | INT                            | Yes      | 0                    |                                |
-|   5 | 必須フラグ                     | is_required                    | TINYINT                        | Yes      | 0                    | 0:任意 1:必須                  |
-|   6 | 説明文                         | description                    | TEXT                           |          |                      |                                |
-|   7 | 文字列                         | string_value                   | VARCHAR(1024)                  |          |                      |                                |
-|   8 | 文章                           | text_value                     | TEXT                           |          |                      |                                |
-|   9 | 整数値                         | integer_value                  | INT                            |          |                      |                                |
-|  10 | 浮動小数値                     | double_value                   | DOUBLE                         |          |                      |                                |
-|  11 | 日付値                         | date_value                     | DATE                           |          |                      |                                |
-|  12 | JSON値                         | json_value                     | MEDIUMTEXT                     |          |                      |                                |
-|  13 | 作成日時                       | create_tm                      | BIGINT                         | Yes      |                      |                                |
-|  14 | 作成者ID                       | create_id                      | BIGINT                         | Yes      |                      |                                |
-|  15 | 更新日時                       | update_tm                      | BIGINT                         | Yes      |                      |                                |
-|  16 | 更新者ID                       | update_id                      | BIGINT                         | Yes      |                      |                                |
-|  17 | 削除済フラグ                   | is_deleted                     | TINYINT                        | Yes      | 0                    | 0:未削除 1:削除済み            |
-|  18 | 削除日時                       | deleted_tm                     | BIGINT                         |          |                      |                                |
-|  19 | バージョン                     | data_version                   | BIGINT                         |          | 1                    | 楽観排他用。レコードのバージョン |
+|   1 | システム設定ID                 | id                             | *レコードID                    | Yes (PK) |                      |                                |
+|   2 | システム・プロパティ名         | property_key                   | *識別キー                      | Yes      |                      |                                |
+|   3 | システム・プロパティ・グループ | property_group                 | *システム・プロパティ・グループ | Yes      | '*'                  |                                |
+|   4 | データ型                       | data_type                      | *システム・プロパティ型        | Yes      | 0                    |                                |
+|   5 | 必須フラグ                     | is_required                    | *フラグ                        | Yes      | 0                    | 0:任意 1:必須                  |
+|   6 | 説明文                         | description                    | *文章                          |          |                      |                                |
+|   7 | 文字列                         | string_value                   | *文字列                        |          |                      |                                |
+|   8 | 文章                           | text_value                     | *長文字列                      |          |                      |                                |
+|   9 | 整数値                         | integer_value                  | *整数                          |          |                      |                                |
+|  10 | 浮動小数値                     | double_value                   | *浮動小数                      |          |                      |                                |
+|  11 | 日付値                         | date_value                     | *日付                          |          |                      |                                |
+|  12 | JSON値                         | json_value                     | *JSON文字列                    |          |                      |                                |
+|  13 | 作成日時                       | create_tm                      | *タイムスタンプ                | Yes      | 0                    |                                |
+|  14 | 作成者ID                       | create_id                      | *利用者ID（参照）              | Yes      | 0                    |                                |
+|  15 | 更新日時                       | update_tm                      | *タイムスタンプ                | Yes      | 0                    |                                |
+|  16 | 更新者ID                       | update_id                      | *利用者ID（参照）              | Yes      | 0                    |                                |
+|  17 | 削除済フラグ                   | is_deleted                     | *フラグ                        | Yes      | 0                    | 0:未削除 1:削除済み            |
+|  18 | 削除日時                       | deleted_tm                     | *タイムスタンプ                |          |                      |                                |
+|  19 | バージョン                     | data_version                   | *データ・バージョン            | Yes      | 1                    | 楽観排他用。レコードのバージョン |
 
 
 
