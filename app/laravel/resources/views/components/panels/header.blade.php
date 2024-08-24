@@ -6,19 +6,19 @@
         <button id="{{ $attributes->get('id') }}_mypage" class="btn px-2">
             <x-icon name="mdi mdi-account-box" />マイページ
         </button>
-        {{-- <button id="{{ $attributes->get('id') }}_logout" class="btn px-2">
+        <button id="{{ $attributes->get('id') }}_logout" class="btn px-2" hidden>
             <x-icon name="mdi mdi-logout" />ログアウト
-        </button> --}}
+        </button>
         <div id="{{ $attributes->get('id') }}_menu" class="dropdown" hidden>
             <button class="btn dropdown-toggle px-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <x-icon name="mdi mdi-microsoft-xbox-controller-menu" />メニュー
             </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item active" href="#">Action</a></li>
+            <ul id="{{ $attributes->get('id') }}_menuItems" class="dropdown-menu dropdown-menu-end">
+                {{-- <li><a class="dropdown-item active" href="#">Action</a></li>
                 <li><a class="dropdown-item" href="#">Another action</a></li>
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
                 <li><hr class="dropdown-divider"></li>
-                <li><a id="{{ $attributes->get('id') }}_logout" class="dropdown-item" href="#"><x-icon name="mdi mdi-microsoft-xbox-controller-menu" />ログアウト</a></li>
+                <li><a id="{{ $attributes->get('id') }}_logout" class="dropdown-item" href="#"><x-icon name="mdi mdi-microsoft-xbox-controller-menu" />ログアウト</a></li> --}}
             </ul>
         </div>
 {{--

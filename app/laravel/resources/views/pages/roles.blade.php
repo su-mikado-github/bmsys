@@ -4,7 +4,7 @@
 import { Page } from "/wsi.js";
 import { Header } from "/js/bmsys-panels.js";
 
-class Mypage extends Page {
+class Routes extends Page {
     #header = this.find("header", (dom)=>new Header(dom));
 
     constructor() {
@@ -16,7 +16,7 @@ class Mypage extends Page {
     }
 }
 
-Page.run(new Mypage());
+Page.run(new Routes());
 </x-script>
 
 @push('headers')

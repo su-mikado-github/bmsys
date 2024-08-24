@@ -80,7 +80,7 @@ Page.run(new Attest());
 <div class="d-flex justify-content-center align-items-center">
     <div class="card col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 shadow">
         <div class="card-header bg-primary">
-            <h6 class="text-white m-0">認証</h6>
+            <h6 class="text-white m-0">{{ optional($screen)->name ?? '' }}</h6>
         </div>
         <div class="card-body">
             <div>

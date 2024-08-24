@@ -122,7 +122,7 @@ export class Template {
         if (target instanceof HTMLTemplateElement) {
             this.#target = target;
         } else {
-            throw new Exception("Not template.");
+            throw new Error("Not template.");
         }
     }
 
@@ -157,7 +157,7 @@ export class Component {
         } else if (target instanceof Component) {
             this.#target = target.target.cloneNode().firstElementChild;
         } else {
-            throw new Exception("Unspported type target.");
+            throw new Error("Unspported type target.");
         }
         if (!!this.#target.id) {
             this.#id = this.#target.id;
@@ -275,7 +275,7 @@ export class Component {
                 method = (e) => this.owner[eventName](e);
             } else {
                 console.log({ eventName });
-                throw new Exception("Illegal arguments of [on] method.");
+                throw new Error("Illegal arguments of [on] method.");
             }
         } else if (
             typeof eventName === "string" &&
@@ -291,7 +291,7 @@ export class Component {
             method = handler;
         } else {
             console.log({ eventName, handler });
-            throw new Exception("Illegal arguments of [on] method.");
+            throw new Error("Illegal arguments of [on] method.");
         }
 
         if (typeof method === "function") {
@@ -333,7 +333,7 @@ export class Component {
         }
         const dom = this.target.querySelector(selector);
         if (!dom) {
-            throw new Exception(`Not found ${selector ?? "null"}`);
+            throw new Error(`Not found ${selector ?? "null"}`);
         }
         const result = wrapper(dom);
         result.owner = this;
@@ -431,7 +431,7 @@ export class Component {
 
     parent(selector, wrapper) {
         if (this.target instanceof DocumentFlagment) {
-            throw new Exception("this is flagment.");
+            throw new Error("this is flagment.");
         }
         if (typeof selector === "function" && !wrapper) {
             wrapper = selector;

@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\User;
+use App\Models\Menu;
+use App\Models\MenuItem;
+use App\Models\ScreenRole;
+//use App\Models\User;
 
 class UsersController extends Controller
 {
@@ -30,7 +33,20 @@ class UsersController extends Controller
     }
 
     public function get(Request $request) {
-        return response()->json($request->user(), 200);
+        $user = $request->user();
+
+        $screen_ids = ScreenRole::joinRoles($user->roles()->select('roles.*'))
+             ->pluck('screen_id');
+
+        $menu_items = MenuItem::with([ 'screen' ])
+            ->joinMenu(Menu::byMenuKey('header.menu')->enabled())
+            ->byScreenIds($screen_ids)
+            ->enabled()
+            ->displayOrder()
+            ->select('menu_items.*')
+            ->get();
+
+        return response()->json(compact('user', 'menu_items'), 200);
     }
 
     public function logout(Request $request) {

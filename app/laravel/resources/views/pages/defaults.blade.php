@@ -18,6 +18,7 @@
     @stack('scripts')
     </script>
 </head>
+<!-- {{ optional($screen)->name ?? 'route名が未設定' }} -->
 <body class="h-100 d-flex flex-column align-items-stretch" hidden>
 @yield('body', '')
 @stack('dialogs')

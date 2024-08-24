@@ -3,7 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+
+use App\Models\Screen;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,5 +38,12 @@ class AppServiceProvider extends ServiceProvider
             return "<?php logger()->debug({$expression}); ?>";
         });
 
+        View::composer('pages.*', function($view) {
+            $route_name = request()->route()->getName();
+            if ($route_name) {
+                $screen = Screen::bySceenKey($route_name)->first();
+                $view->with('screen', $screen);
+            }
+        });
     }
 }

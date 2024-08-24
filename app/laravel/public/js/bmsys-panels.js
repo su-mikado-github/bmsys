@@ -5,13 +5,29 @@ export class Header extends Panel {
 
     #menu = this.find("menu");
 
+    #menuItems = this.find("menuItems");
+
     #logout = this.find("logout").on("click", "logout_click");
+
+    #menuItemTemplate(menuItem) {
+        return `<li>
+    <a class="dropdown-item" href="${menuItem.screen?.url ?? "#"}">
+        <i class="${
+            menuItem.screen?.icon ?? "mdi mdi-arrow-right-drop-circle-outline"
+        }"></i>&nbsp;${menuItem.screen?.short_name ?? "(不明)"}
+    </a>
+</li>`;
+    }
 
     #loadUser() {
         this.api
             .get("/users")
             .then((response) => {
-                this.session.user = response.data;
+                this.session.user = response.data.user;
+                const menuItems = response.data.menu_items.map((menuItem) =>
+                    this.#menuItemTemplate(menuItem)
+                );
+                this.#menuItems.html = menuItems.join("");
                 this.#menu.show();
                 this.#logout.show();
             })
